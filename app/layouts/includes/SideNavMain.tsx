@@ -13,7 +13,7 @@ export default function SideNavMain() {
     <>
       <div
         id="SideNavMain"
-        className={`fixed z-20 bg-white pt-[70px] h-full lg:border-r-0 border-r-[85px] overflow-auto ${
+        className={`fixed z-20 bg-white pt-[70px] h-full lg:border-r-0 border-r-[2px] overflow-auto ${
           pathname == "/" ? "lg:w-[310px]" : "lg:w-[220px]"
         } `}
       >
@@ -35,7 +35,7 @@ export default function SideNavMain() {
           <h3 className="lg:block hidden text-xs text-gray-500 font-semibold pt-4 pb-2 px-2">
             Suggested Accounts
           </h3>
-          <div className="lg:hidden block pt-3" />
+          <div className="lg:hidden block pt-3" /> 
           <ClientOnly>
             <div className="cursor-pointer">
               <MenuItemFollow
@@ -82,7 +82,7 @@ export default function SideNavMain() {
             <p className="pt-4 px-2">About Newsroom TikTok Shop Contact Careers ByteDance</p>
             <p className="pt-4 px-2">TikTok for Good Advertise Developers Transparency TikTok Rewards TikTok Browse TikTok Embeds</p>
             <p className="pt-4 px-2">Help Saety Terms Privacy Creator Portal Community Guidelines</p>
-            <p className="pt-4 px-2">2024 TikTok</p>
+            <p className="pt-4 px-2"> $$copy  2024 TikTok</p>
           </div>
           </div>
         </div>
