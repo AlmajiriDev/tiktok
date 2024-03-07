@@ -3,8 +3,11 @@ import { useState } from "react";
 import TextInput from "../TextInput";
 import { BiLoaderCircle } from "react-icons/bi";
 import { useUser } from "@/app/context/user";
+import { useGeneralStore } from "@/app/stores/general";
 
 export default function Login() {
+
+  let { setisLoginOpen } = useGeneralStore()
 
   const contextUser = useUser()
 
@@ -13,6 +16,7 @@ export default function Login() {
   const [password, setPassword] = useState<string | "">("");
   const [error, setError] = useState<ShowErrorObject | null>(null);
 
+  
   const showError = (type: string) => {
     if (error && Object.entries(error).length > 0 && error?.type == type) {
       return error.message;
@@ -43,7 +47,7 @@ const login = async () => {
         setLoading(true)
         await contextUser.login(email, password)
         setLoading(false)
-        // setIsLoginOpen(false)
+        setisLoginOpen(false)
     } catch (error) {
         console.log(error)
         setLoading(false)

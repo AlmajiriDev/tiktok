@@ -4,23 +4,37 @@ import Link from "next/link";
 import { useState } from "react";
 import { BiLoaderCircle } from "react-icons/bi";
 import { BsTrash3 } from "react-icons/bs";
+import { useUser } from "@/app/context/user";
+import { useCommentStore } from "@/app/stores/comment";
+import useDeleteComment from "@/app/hooks/useDeleteComment";
+import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
 
 export default function SingleComment({comment, params}: SingleCommentCompTypes) {
 
+  const contextUser = useUser()
+  let {setCommentsByPost} = useCommentStore()
+
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
 
-  const deleteThisComment = () => {
+  const deleteThisComment = async () => {
     let res = confirm("Are you sure you want to tdelete this comment?")
     if(!res) return
 
-    // else do something else
+    try {
+      setIsDeleting(true)
+      await useDeleteComment(comment.id)
+      setIsDeleting(false)
+    } catch (error) {
+       console.log(error)
+       alert(error)
+    }
   }
   return (
     <>
     <div id="SingleComment" className="flex items-center justify-between px-8 mt-4">
       <div className="flex items-center relative w-full">
         <Link href={`/profile/${comment.profile.user_id}`}>
-          <img className="absolute top-0 rounded-full lg:mx-0 mx-auto" src={comment.profile.image} width={40} />
+          <img className="absolute top-0 rounded-full lg:mx-0 mx-auto" src={useCreateBucketUrl(comment.profile.image)} width={40} />
         </Link>
         <div className="ml-14 pt-0.5 w-full">
           <div className="text-[18px] font-semibold flex items-center justify-between">
@@ -30,7 +44,7 @@ export default function SingleComment({comment, params}: SingleCommentCompTypes)
                 {comment?.created_at}
               </span>
             </span>
-            {true ? (
+            {contextUser?.user?.id == comment.profile.user_id ? (
               <button disabled={isDeleting} onClick={()=> deleteThisComment}>
                 {isDeleting ? 
                   <BiLoaderCircle className="animate-spin" color="#E91E62" size={20} />
